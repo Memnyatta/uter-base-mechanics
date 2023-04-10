@@ -89,6 +89,15 @@ public partial class @MyNameIsUter: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Climb"",
+                    ""type"": ""Value"",
+                    ""id"": ""56ef2bc5-3c5a-4807-8bcc-41a1af797df8"",
+                    ""expectedControlType"": ""Key"",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -465,6 +474,28 @@ public partial class @MyNameIsUter: IInputActionCollection2, IDisposable
                     ""action"": ""HackQE"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a532c474-07bb-493c-be30-af84b534a415"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Climb"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""745e635f-fb30-4777-8ecf-c2bdcfae63c6"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Climb"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1183,6 +1214,7 @@ public partial class @MyNameIsUter: IInputActionCollection2, IDisposable
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_HackAD = m_Player.FindAction("HackAD", throwIfNotFound: true);
         m_Player_HackQE = m_Player.FindAction("HackQE", throwIfNotFound: true);
+        m_Player_Climb = m_Player.FindAction("Climb", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1266,6 +1298,7 @@ public partial class @MyNameIsUter: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_HackAD;
     private readonly InputAction m_Player_HackQE;
+    private readonly InputAction m_Player_Climb;
     public struct PlayerActions
     {
         private @MyNameIsUter m_Wrapper;
@@ -1277,6 +1310,7 @@ public partial class @MyNameIsUter: IInputActionCollection2, IDisposable
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @HackAD => m_Wrapper.m_Player_HackAD;
         public InputAction @HackQE => m_Wrapper.m_Player_HackQE;
+        public InputAction @Climb => m_Wrapper.m_Player_Climb;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1307,6 +1341,9 @@ public partial class @MyNameIsUter: IInputActionCollection2, IDisposable
             @HackQE.started += instance.OnHackQE;
             @HackQE.performed += instance.OnHackQE;
             @HackQE.canceled += instance.OnHackQE;
+            @Climb.started += instance.OnClimb;
+            @Climb.performed += instance.OnClimb;
+            @Climb.canceled += instance.OnClimb;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1332,6 +1369,9 @@ public partial class @MyNameIsUter: IInputActionCollection2, IDisposable
             @HackQE.started -= instance.OnHackQE;
             @HackQE.performed -= instance.OnHackQE;
             @HackQE.canceled -= instance.OnHackQE;
+            @Climb.started -= instance.OnClimb;
+            @Climb.performed -= instance.OnClimb;
+            @Climb.canceled -= instance.OnClimb;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1545,6 +1585,7 @@ public partial class @MyNameIsUter: IInputActionCollection2, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnHackAD(InputAction.CallbackContext context);
         void OnHackQE(InputAction.CallbackContext context);
+        void OnClimb(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

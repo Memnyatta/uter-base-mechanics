@@ -924,6 +924,7 @@ GameObject:
   - component: {fileID: 1913183018077492559}
   - component: {fileID: 649401654348303500}
   - component: {fileID: 1293318970211587723}
+  - component: {fileID: 6046349693437944002}
   m_Layer: 3
   m_Name: Uter
   m_TagString: Player
@@ -1050,6 +1051,7 @@ MonoBehaviour:
   jumpHeigh: 0.7
   isSprinting: 0
   canSprint: 1
+  isClimbing: 0
   canMove: 0
   _pushForce: 1
   kepkas:
@@ -1144,6 +1146,36 @@ MonoBehaviour:
   RayPosition: {x: 0, y: 0.13, z: 0}
   RayLengh: 1.08
   doorScript: {fileID: 0}
+--- !u!114 &6046349693437944002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1293318970211587722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ff5cd4718a1c004db290d72173f4b75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orientation: {fileID: 0}
+  rb: {fileID: 0}
+  thirdPC: {fileID: 0}
+  whatIsWall:
+    serializedVersion: 2
+    m_Bits: 128
+  climbSpeed: 0
+  maxClimbTime: 0
+  climbJumpUpForce: 0
+  climbJumpBackForce: 0
+  jumpKey: 32
+  climbJumps: 0
+  detectionLength: 0
+  sphereCastRadius: 0
+  maxWallLookAngle: 0
+  minWallNormalAngleChange: 0
+  exitingWall: 0
+  exitWallTime: 0
 --- !u!1 &1309303507998808787
 GameObject:
   m_ObjectHideFlags: 0

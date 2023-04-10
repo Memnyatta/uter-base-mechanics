@@ -11,6 +11,7 @@ public class ThirdPersonController : MonoBehaviour
     [SerializeField]
     private Animator _animator;
 
+
     public float speed;
     public float sprintspeed;
 
@@ -24,8 +25,30 @@ public class ThirdPersonController : MonoBehaviour
     public LayerMask Ground;
     public float jumpHeigh;
     public bool canWalk { get; set; }
+    public bool canSprint = true;
+    [HideInInspector]
     public bool isSprinting;
-    public bool canSprint;
+
+    [Header("References Climbing")]
+    public LayerMask whatIsLadder;
+
+    [Header("Climbing")]
+    public float climbSpeed;
+    public float maxClimbTime;
+
+    public bool canClimbing = true;
+
+    private float climbTimer;
+    private bool climbing = false;
+
+    [Header("Detection")]
+    public float detectionLength;
+    public float sphereCastRadius;
+    public float maxLadderLookAngle;
+
+    private float ladderLookAngle;
+    private RaycastHit frontLadderHit;
+    private bool ladderFront;
 
     [HideInInspector]
     public bool canMove;
@@ -96,6 +119,8 @@ public class ThirdPersonController : MonoBehaviour
         controls.Player.Sprint.started += Sprint;
         controls.Player.Sprint.canceled += Sprint;
 
+        controls.Player.Climb.started += Climb;
+
         canWalk = true;
         cam = Camera.main.GetComponent<Transform>();
     }
@@ -105,6 +130,8 @@ public class ThirdPersonController : MonoBehaviour
         controls.Player.Disable();
         controls.Player.Sprint.started -= Sprint;
         controls.Player.Sprint.canceled -= Sprint;
+
+        controls.Player.Climb.started -= Climb;
     }
 
     private void OnDrawGizmos()
@@ -136,6 +163,72 @@ public class ThirdPersonController : MonoBehaviour
         }
     }
 
+    void Climb(InputAction.CallbackContext context)
+    {
+        LadderCheck();
+        StateMachine();
+
+        if (climbing)
+        {
+            ClimbingMovement();
+        }
+    }
+
+    private void StateMachine()
+    {
+        // State 1 - Climbing
+        if (ladderFront && ladderLookAngle < maxLadderLookAngle)
+        {
+            if (!climbing && climbTimer > 0)
+            {
+                StartClimbing(); 
+            }
+
+            // timer
+            if (climbTimer > 0) climbTimer -= Time.deltaTime;
+            if (climbTimer < 0) StopClimbing();
+        }
+
+        // State 3 - None
+        else
+        {
+            if (climbing) StopClimbing();
+        }
+    }
+
+    private void LadderCheck()
+    {
+        ladderFront = Physics.SphereCast(transform.position, sphereCastRadius, transform.forward, out frontLadderHit, detectionLength, whatIsLadder);
+        ladderLookAngle = Vector3.Angle(transform.forward, -frontLadderHit.normal);
+
+        if (isGrounded) 
+        {
+            climbTimer = maxClimbTime;
+        }
+    }
+
+    private void StartClimbing()
+    {
+        climbing = true;
+
+        /// idea - camera fov change
+    }
+
+    private void ClimbingMovement()
+    {
+        velocity = new Vector3(velocity.x, climbSpeed, velocity.z);
+
+        /// idea - sound effect
+    }
+
+    private void StopClimbing()
+    {
+        climbing = false;
+
+        /// idea - particle effect
+        /// idea - sound effect
+    }
+
     private void Update()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
@@ -150,7 +243,17 @@ public class ThirdPersonController : MonoBehaviour
             velocity.y = -0f;
         }
 
-        velocity.y += gravity * Time.deltaTime;
+        if (climbing)
+        {
+            LadderCheck();
+            StateMachine();
+            ClimbingMovement();
+        }
+
+        if (Mathf.Abs(velocity.y) < 10)
+        {
+            velocity.y += gravity * Time.deltaTime;
+        }
 
         if (canMove)
         {
