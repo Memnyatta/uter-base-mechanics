@@ -8,9 +8,6 @@ public class ThirdPersonController : MonoBehaviour
     public CharacterController _controller;
     [SerializeField]
     private Transform cam;
-    [SerializeField]
-    private Animator _animator;
-
 
     public float speed;
     public float sprintspeed;
@@ -25,9 +22,16 @@ public class ThirdPersonController : MonoBehaviour
     public LayerMask Ground;
     public float jumpHeigh;
     public bool canWalk { get; set; }
-    public bool canSprint = true;
-    [HideInInspector]
+   [HideInInspector]
     public bool isSprinting;
+    public bool canSprint;
+
+    [HideInInspector]
+    public bool canMove;
+
+    MyNameIsUter controls = null;
+
+    //Лестницы
 
     [Header("References Climbing")]
     public LayerMask whatIsLadder;
@@ -39,7 +43,7 @@ public class ThirdPersonController : MonoBehaviour
     public bool canClimbing = true;
 
     private float climbTimer;
-    private bool climbing = false;
+    public bool climbing = false;
 
     [Header("Detection")]
     public float detectionLength;
@@ -50,14 +54,9 @@ public class ThirdPersonController : MonoBehaviour
     private RaycastHit frontLadderHit;
     private bool ladderFront;
 
-    [HideInInspector]
-    public bool canMove;
-
-    MyNameIsUter controls = null;
-
     #region OBSTACLEPUSH
 
-[SerializeField]
+    [SerializeField]
     private float _pushForce;
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
@@ -119,8 +118,6 @@ public class ThirdPersonController : MonoBehaviour
         controls.Player.Sprint.started += Sprint;
         controls.Player.Sprint.canceled += Sprint;
 
-        controls.Player.Climb.started += Climb;
-
         canWalk = true;
         cam = Camera.main.GetComponent<Transform>();
     }
@@ -130,8 +127,6 @@ public class ThirdPersonController : MonoBehaviour
         controls.Player.Disable();
         controls.Player.Sprint.started -= Sprint;
         controls.Player.Sprint.canceled -= Sprint;
-
-        controls.Player.Climb.started -= Climb;
     }
 
     private void OnDrawGizmos()
@@ -151,29 +146,7 @@ public class ThirdPersonController : MonoBehaviour
         isSprinting = false;
     }
 
-    void Sprint(InputAction.CallbackContext context)
-    {
-        if (context.started && canSprint)
-        {
-            SprintEnable();
-        }
-        if (context.canceled && canSprint && isSprinting)
-        {
-            SprintDisable();
-        }
-    }
-
-    void Climb(InputAction.CallbackContext context)
-    {
-        LadderCheck();
-        StateMachine();
-
-        if (climbing)
-        {
-            ClimbingMovement();
-        }
-    }
-
+    #region Climb
     private void StateMachine()
     {
         // State 1 - Climbing
@@ -181,7 +154,7 @@ public class ThirdPersonController : MonoBehaviour
         {
             if (!climbing && climbTimer > 0)
             {
-                StartClimbing(); 
+                StartClimbing();
             }
 
             // timer
@@ -198,10 +171,10 @@ public class ThirdPersonController : MonoBehaviour
 
     private void LadderCheck()
     {
-        ladderFront = Physics.SphereCast(transform.position, sphereCastRadius, transform.forward, out frontLadderHit, detectionLength, whatIsLadder);
+        //ladderFront = Physics.SphereCast(transform.position, sphereCastRadius, transform.forward, out frontLadderHit, detectionLength, whatIsLadder);
         ladderLookAngle = Vector3.Angle(transform.forward, -frontLadderHit.normal);
 
-        if (isGrounded) 
+        if (isGrounded)
         {
             climbTimer = maxClimbTime;
         }
@@ -209,24 +182,40 @@ public class ThirdPersonController : MonoBehaviour
 
     private void StartClimbing()
     {
-        climbing = true;
+        
 
         /// idea - camera fov change
     }
 
     private void ClimbingMovement()
     {
-        velocity = new Vector3(velocity.x, climbSpeed, velocity.z);
+        if (ladderFront)
+        {
+            climbing = true;
+            velocity = new Vector3(velocity.x, climbSpeed, velocity.z);
+        }
 
         /// idea - sound effect
     }
 
     private void StopClimbing()
     {
-        climbing = false;
-
+        
         /// idea - particle effect
         /// idea - sound effect
+    }
+    #endregion
+
+    void Sprint(InputAction.CallbackContext context)
+    {
+        if (context.started && canSprint)
+        {
+            SprintEnable();
+        }
+        if (context.canceled && canSprint && isSprinting)
+        {
+            SprintDisable();
+        }
     }
 
     private void Update()
@@ -243,12 +232,18 @@ public class ThirdPersonController : MonoBehaviour
             velocity.y = -0f;
         }
 
-        if (climbing)
+        if (controls.Player.Move.IsPressed() && ladderFront)
         {
             LadderCheck();
             StateMachine();
             ClimbingMovement();
         }
+        else
+        {
+            climbing = false;
+            StopClimbing();
+        }
+
 
         if (Mathf.Abs(velocity.y) < 10)
         {
@@ -267,6 +262,8 @@ public class ThirdPersonController : MonoBehaviour
 
         if (direction.magnitude >= 0.1f && Time.timeScale != 0 && canWalk)
         {
+            ladderFront = Physics.SphereCast(transform.position, sphereCastRadius, transform.forward, out frontLadderHit, detectionLength, whatIsLadder);
+
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
             transform.rotation = Quaternion.Euler(0, angle, 0);
