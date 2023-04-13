@@ -96,7 +96,6 @@ public void Pause(bool withUI)
 {
         if (withUI)
         {
-            GetComponent<KepkaInventory>().CloseKepkaMenu();
             ContinueButton.Select();
             arrows[0].SetActive(true);
             snapshot.start();

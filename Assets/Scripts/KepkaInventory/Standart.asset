@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Standart
   m_EditorClassIdentifier: 
   _name: Standart
-  _abilityRU: '-'
-  _abilityEN: '-'
+  _abilityRU: "\u041D\u0435\u043F\u043E\u0432\u0442\u043E\u0440\u0438\u043C\u0430\u044F
+    \u043A\u043B\u0430\u0441\u0441\u0438\u043A\u0430"
+  _abilityEN: Gold classic
   _image: {fileID: 21300000, guid: 13697f51a288a8f4c959609d1c272218, type: 3}

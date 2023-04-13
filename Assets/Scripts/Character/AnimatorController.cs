@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AnimatorController : MonoBehaviour
 {
@@ -15,10 +16,10 @@ public class AnimatorController : MonoBehaviour
 
     private void Start()
     {
-        _playerInteraction = GetComponent<PlayerInteraction>(); 
+        _playerInteraction = GetComponent<PlayerInteraction>();
         _animator = GetComponent<Animator>();
         _characterController = GetComponent<CharacterController>();
-        _thirdPersonController= GetComponent<ThirdPersonController>();
+        _thirdPersonController = GetComponent<ThirdPersonController>();
     }
 
     private void FixedUpdate()
@@ -44,6 +45,15 @@ public class AnimatorController : MonoBehaviour
         if (Input.GetButtonDown("Jump"))
         {
             _animator.SetTrigger("isJumped");
+        }
+
+        if (_thirdPersonController.climbing)
+        {
+            _animator.SetBool("isClimbing", true);
+        }
+        else
+        {
+            _animator.SetBool("isClimbing", false);
         }
 
         if (_characterController.velocity.x != 0 || _characterController.velocity.z != 0)
