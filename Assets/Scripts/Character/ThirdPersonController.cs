@@ -111,9 +111,11 @@ public class ThirdPersonController : MonoBehaviour
     #endregion
     private void Awake()
     {
+        
         canMove = true;
 
         controls = new MyNameIsUter();
+      
         controls.Player.Enable();
         controls.Player.Sprint.started += Sprint;
         controls.Player.Sprint.canceled += Sprint;

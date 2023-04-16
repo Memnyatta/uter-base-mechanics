@@ -31,12 +31,15 @@ public class turretVision : MonoBehaviour
         uter = GameObject.Find(uterName);
         multAim = headAim.GetComponent<MultiAimConstraint>();
     }
-
+    public void shoot() 
+    {
+    
+    }
     // Update is called once per frame
     void FixedUpdate()
     {
         
-        dir = target.transform.position - uter.transform.position;
+        dir = uter.transform.position - headAim.transform.position;
         Physics.Raycast(headAim.transform.position, dir, out hit, maxDist, mask);
         Debug.DrawLine(headAim.transform.position, uter.transform.position,Color.red);
         if (hit.collider != null) 
@@ -47,7 +50,7 @@ public class turretVision : MonoBehaviour
             }
             else { isVisible = false; }
             
-            Debug.Log(hit.point + " " + hit.collider.gameObject.name);
+           // Debug.Log(hit.point + " " + hit.collider.gameObject.name);
         }
         
         if (isVisible) { target.transform.position = uter.transform.position; }
