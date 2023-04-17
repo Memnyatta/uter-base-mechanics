@@ -20,9 +20,11 @@ public class bulletMove : MonoBehaviour
 
         nextTime = Time.time + time;
 
-        while (nextTime < Time.time)
+        for (int i = 0; i < time; i++) 
         {
-            charCont.Move(dir * speed * Time.deltaTime); 
+            charCont.Move(testD * speed * Time.deltaTime);
+            
+            yield return new WaitForSeconds(time);
         }
         
         
