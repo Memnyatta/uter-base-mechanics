@@ -8,6 +8,7 @@ public class bulletMove : MonoBehaviour
     public float testT;
     public Vector3 testD;
     public CharacterController charCont;
+    public float nextTime;
     // Start is called before the first frame update
     void Awake()
     {
@@ -16,8 +17,8 @@ public class bulletMove : MonoBehaviour
     }
     public IEnumerator startMove(float speed,float time,Vector3 dir) 
     {
-        Debug.Log("1111");
-        float nextTime = Time.time + time;
+        //Debug.Log("1111");
+        nextTime = Time.time + time;
         while (Time.time < nextTime) 
         {
             charCont.Move(dir * speed * Time.deltaTime);
