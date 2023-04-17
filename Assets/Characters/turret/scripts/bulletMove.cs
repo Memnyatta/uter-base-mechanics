@@ -15,13 +15,15 @@ public class bulletMove : MonoBehaviour
         charCont = GetComponent<CharacterController>();
         StartCoroutine(startMove(testS, testT, testD));
     }
-    public IEnumerator startMove(float speed,float time,Vector3 dir) 
+    public IEnumerator startMove(float speed, float time, Vector3 dir)
     {
-        Debug.Log("startMove");
+
         nextTime = Time.time + time;
-        
-        for (int i = 0; i < time; i++) { charCont.Move(dir * speed * Time.deltaTime); }
-        
+
+        while (nextTime < Time.time)
+        {
+            charCont.Move(dir * speed * Time.deltaTime); 
+        }
         
         
         yield return null;
