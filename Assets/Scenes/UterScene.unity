@@ -1186,9 +1186,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2147483647
   maxDist: 999
-  shootCooldown: 0
+  shootCooldown: 5
   turnSpeed: 0
   isVisible: 0
+  isShooting: 0
   dir: {x: 0, y: 0, z: 0}
   headAim: {fileID: 0}
   target: {fileID: 0}

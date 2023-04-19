@@ -12,6 +12,7 @@ public class turretVision : MonoBehaviour
     public float turnSpeed;
     [Header("Для просмотра")]
     public bool isVisible;
+    public bool isShooting;
     public RaycastHit hit;
     public Vector3 dir;
     [Header("Референсы")]
@@ -38,10 +39,12 @@ public class turretVision : MonoBehaviour
     }
     public IEnumerator periodiclyShoot(float cooldown)
     {
+        isShooting = true;
         while (isVisible) 
         {
             yield return new WaitForSeconds(cooldown);
             shoot();
+            isShooting = false;
             yield return new WaitForSeconds(cooldown);
         }
         
@@ -60,14 +63,14 @@ public class turretVision : MonoBehaviour
             {
                 isVisible = true;
             }
-            else { isVisible = false; }
+            else { isShooting = false; isVisible = false; }
             
            // Debug.Log(hit.point + " " + hit.collider.gameObject.name);
         }
         
         if (isVisible) 
         {
-            StartCoroutine(periodiclyShoot(shootCooldown));
+            if (!isShooting) StartCoroutine(periodiclyShoot(shootCooldown));
             target.transform.position = uter.transform.position;
         }
         
