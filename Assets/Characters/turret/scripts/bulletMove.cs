@@ -20,14 +20,14 @@ public class bulletMove : MonoBehaviour
 
         nextTime = Time.time + time;
 
-        for (int i = 0; i < time; i++) 
+        Debug.Log("started move");
+        
+        while (true)
         {
-            charCont.Move(testD * speed * Time.deltaTime);
-            
-            yield return new WaitForSeconds(time);
+            print(Time.time + " " + nextTime);
+            if (Time.time > nextTime) { break; }
+            yield return new WaitForSeconds(0.2f);
         }
-        
-        
         yield return null;
     }
     // Update is called once per frame
