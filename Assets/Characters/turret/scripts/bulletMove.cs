@@ -7,27 +7,32 @@ public class bulletMove : MonoBehaviour
     public float testS;
     public float testT;
     public Vector3 testD;
-    public CharacterController charCont;
+    
+    
+
+    [Header("--------")]
+    public bool canMove;
     public float nextTime;
+    public CharacterController charCont;
     // Start is called before the first frame update
     void Awake()
     {
         charCont = GetComponent<CharacterController>();
-        StartCoroutine(startMove(testS, testT, testD));
+        //StartCoroutine(startMove(testS, testT, testD));
     }
     public IEnumerator startMove(float speed, float time, Vector3 dir)
     {
 
         nextTime = Time.time + time;
-
-        Debug.Log("started move");
-        
-        while (true)
+        while (canMove)
         {
-            print(Time.time + " " + nextTime);
+            
             if (Time.time > nextTime) { break; }
-            yield return new WaitForSeconds(0.2f);
+           // print(Time.time + " " + nextTime);
+            charCont.Move(dir * speed * Time.deltaTime);
+            yield return new WaitForSeconds(0.005f);
         }
+        print("stopped moving");
         yield return null;
     }
     // Update is called once per frame

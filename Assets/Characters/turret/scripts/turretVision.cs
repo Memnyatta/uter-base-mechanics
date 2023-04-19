@@ -7,6 +7,7 @@ public class turretVision : MonoBehaviour
 {
     public LayerMask mask;
     public float maxDist;
+    public float shootCooldown;
     [Range(0.0f, 100.0f)]
     public float turnSpeed;
     [Header("Для просмотра")]
@@ -33,7 +34,18 @@ public class turretVision : MonoBehaviour
     }
     public void shoot() 
     {
-    
+        Debug.Log("shoots");
+    }
+    public IEnumerator periodiclyShoot(float cooldown)
+    {
+        while (isVisible) 
+        {
+            yield return new WaitForSeconds(cooldown);
+            shoot();
+            yield return new WaitForSeconds(cooldown);
+        }
+        
+        yield return null;
     }
     // Update is called once per frame
     void FixedUpdate()
@@ -53,7 +65,11 @@ public class turretVision : MonoBehaviour
            // Debug.Log(hit.point + " " + hit.collider.gameObject.name);
         }
         
-        if (isVisible) { target.transform.position = uter.transform.position; }
+        if (isVisible) 
+        {
+            StartCoroutine(periodiclyShoot(shootCooldown));
+            target.transform.position = uter.transform.position;
+        }
         
     }
 }
