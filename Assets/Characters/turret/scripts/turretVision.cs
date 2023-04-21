@@ -8,6 +8,8 @@ public class turretVision : MonoBehaviour
     public LayerMask mask;
     public float maxDist;
     public float shootCooldown;
+    public float bulletDur;
+    public float bulletSpeed;
     [Range(0.0f, 100.0f)]
     public float turnSpeed;
     [Header("Для просмотра")]
@@ -16,26 +18,35 @@ public class turretVision : MonoBehaviour
     public RaycastHit hit;
     public Vector3 dir;
     [Header("Референсы")]
+    public GameObject bullet;
+    public GameObject fireHole;
+    public GameObject head;
     public GameObject headAim;
     public GameObject target;
     public GameObject uter;
     public MultiAimConstraint multAim;
     [Header("Для поиска референсов")]
+    public string fireHoleName;
     public string headAimName;
+    public string headName;
     public string targetName;
     public string uterName;
 
     // Start is called before the first frame update
     void Awake()
     {
+        head = GameObject.Find(headName);
         headAim = GameObject.Find(headAimName);
         target = GameObject.Find(targetName);
         uter = GameObject.Find(uterName);
         multAim = headAim.GetComponent<MultiAimConstraint>();
+        fireHole = GameObject.Find(fireHoleName);
     }
     public void shoot() 
     {
         Debug.Log("shoots");
+        GameObject b = Instantiate(bullet, fireHole.transform.position, head.transform.rotation);
+        StartCoroutine(b.GetComponent<bulletMove>().startMove(bulletSpeed, bulletDur, dir));
     }
     public IEnumerator periodiclyShoot(float cooldown)
     {
