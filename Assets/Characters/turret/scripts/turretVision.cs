@@ -10,14 +10,19 @@ public class turretVision : MonoBehaviour
     public float shootCooldown;
     public float bulletDur;
     public float bulletSpeed;
+    public float inactiveSpeed;
+    public float minDistInactive;
     [Range(0.0f, 100.0f)]
     public float turnSpeed;
     [Header("Для просмотра")]
+    public GameObject curInactive;
     public bool isVisible;
     public bool isShooting;
     public RaycastHit hit;
     public Vector3 dir;
     [Header("Референсы")]
+    public List<GameObject> inactives;
+    
     public GameObject bullet;
     public GameObject fireHole;
     public GameObject head;
@@ -61,6 +66,12 @@ public class turretVision : MonoBehaviour
         
         yield return null;
     }
+    public void idle() 
+    {
+        
+        isShooting = false;
+        isVisible = false;
+    }
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -74,9 +85,16 @@ public class turretVision : MonoBehaviour
             {
                 isVisible = true;
             }
-            else { isShooting = false; isVisible = false; }
+            else 
+            {
+                idle();
+            }
             
            // Debug.Log(hit.point + " " + hit.collider.gameObject.name);
+        }
+        else 
+        {
+            idle();
         }
         
         if (isVisible) 
@@ -84,6 +102,16 @@ public class turretVision : MonoBehaviour
             if (!isShooting) StartCoroutine(periodiclyShoot(shootCooldown));
             target.transform.position = uter.transform.position;
         }
-        
+       foreach (GameObject obj in inactives) 
+        {
+            Debug.Log(obj.name + " dist " + Vector3.Distance(obj.transform.position, target.transform.position));
+            if (Vector3.Distance(obj.transform.position, curInactive.transform.position) < minDistInactive) 
+            {
+                
+                List<GameObject> rest = inactives;
+                rest.Remove(curInactive);
+                curInactive = rest[0];
+            }
+        } 
     }
 }

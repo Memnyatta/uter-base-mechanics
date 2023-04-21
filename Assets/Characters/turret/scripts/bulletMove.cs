@@ -33,6 +33,7 @@ public class bulletMove : MonoBehaviour
             yield return new WaitForSeconds(0.005f);
         }
         print("stopped moving");
+        Destroy(gameObject);
         yield return null;
     }
     // Update is called once per frame
