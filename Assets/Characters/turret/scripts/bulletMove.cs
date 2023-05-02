@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class bulletMove : MonoBehaviour
 {
-    public float testS;
-    public float testT;
-    public Vector3 testD;
+    //public float testS;
+    //public float testT;
+    //public Vector3 testD;
     
     
 
@@ -27,7 +27,7 @@ public class bulletMove : MonoBehaviour
         while (canMove)
         {
             
-            if (Time.time > nextTime) { break; }
+            if (Time.time > nextTime) { canMove = false; }
            // print(Time.time + " " + nextTime);
             charCont.Move(dir * speed * Time.deltaTime);
             yield return new WaitForSeconds(0.005f);
