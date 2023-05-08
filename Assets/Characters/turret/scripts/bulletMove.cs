@@ -8,18 +8,19 @@ public class bulletMove : MonoBehaviour
     //public float testT;
     //public Vector3 testD;
 
-
+    
 
     [Header("--------")]
 
-    public GameObject explPart;
+    
     public bool canMove;
     public float nextTime;
     public CharacterController charCont;
     private void dest()
     {
-        Instantiate(explPart, transform.position, transform.rotation);
-        Destroy(gameObject,1);
+        
+        
+        //Destroy(gameObject,1);
     }
     // Start is called before the first frame update
     void Awake()
@@ -34,11 +35,11 @@ public class bulletMove : MonoBehaviour
         while (canMove)
         {
             
-            Debug.Log("startMove running");
+            //Debug.Log("startMove running");
             // print(Time.time + " " + nextTime);
             charCont.Move(dir * speed * Time.deltaTime);
             yield return new WaitForSeconds(0.005f);
-            if (Time.time > nextTime) { dest(); canMove = false; }
+            if (Time.time > nextTime) { canMove = false; }
         }
         dest();
         yield return null;

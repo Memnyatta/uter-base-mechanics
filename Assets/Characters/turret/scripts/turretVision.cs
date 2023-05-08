@@ -21,8 +21,7 @@ public class turretVision : MonoBehaviour
     [Header("Для просмотра")]
     
     public bool reachedIdle;
-    public delegate void shootAction();
-    public static event shootAction onShot;
+    
     public Vector3 randomPoint;
     public bool isVisible;
     public bool isShooting;
@@ -58,8 +57,7 @@ public class turretVision : MonoBehaviour
     }
     public void shoot() 
     {
-        if (onShot != null)
-            onShot();
+        
         GameObject b = Instantiate(bullet, fireHole.transform.position, head.transform.rotation);
         StartCoroutine(b.GetComponent<bulletMove>().startMove(bulletSpeed, bulletDur, dir));
     }
@@ -76,11 +74,12 @@ public class turretVision : MonoBehaviour
             yield return new WaitForSeconds(cooldown);
         }
         isShooting = false;
+        StopCoroutine(periodiclyShoot(cooldown));
         yield return null;
     }
     public void idle() 
     {       
-        isShooting = false;
+        
         isVisible = false;
 
         target.transform.position = Vector3.MoveTowards(target.transform.position, randomPoint, idleSpeed);
@@ -106,10 +105,10 @@ public class turretVision : MonoBehaviour
             {
                 isVisible = true;
             }
-            else 
-            {
-                idle();
-            }
+            //else 
+            //{
+            //    idle();
+            //}
         }
         else 
         {
@@ -122,7 +121,7 @@ public class turretVision : MonoBehaviour
             {
                 cor = periodiclyShoot(shootCooldown);
                 StopCoroutine(cor);
-                StartCoroutine(cor);
+                if (!isShooting)StartCoroutine(cor);
             }
             target.transform.position = uter.transform.position;
         }

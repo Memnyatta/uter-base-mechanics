@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class damageOnTrigger : MonoBehaviour
 {
+    public delegate void collideAct(GameObject t);
+    public static event collideAct onCol;
+
     public float damage;
     public List<string> tags;
     public bool delOnDam;
@@ -24,8 +27,15 @@ public class damageOnTrigger : MonoBehaviour
         curDam.dealDamage(damage, gameObject.name);
         Debug.Log("dealt damage");
 
+        if (onCol != null) 
+        {
+            onCol(gameObject);
+            //onCol = null;
+        }
+           
         if (delOnDam) Destroy(gameObject);
          
+
 
     }
     private void OnTriggerStay(Collider other)
