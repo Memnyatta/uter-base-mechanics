@@ -6,6 +6,7 @@ public class damageOnTrigger : MonoBehaviour
 {
     public float damage;
     public List<string> tags;
+    public bool delOnDam;
     [Header("Для просмотра")]
     public IDamageable curDam;
     public BoxCollider colBox;
@@ -21,7 +22,10 @@ public class damageOnTrigger : MonoBehaviour
 
         if (curDam == null) return;
         curDam.dealDamage(damage, gameObject.name);
-        Debug.Log("dealt damage"); 
+        Debug.Log("dealt damage");
+
+        if (delOnDam) Destroy(gameObject);
+         
 
     }
     private void OnTriggerStay(Collider other)

@@ -5,6 +5,7 @@ using UnityEngine.Animations.Rigging;
 
 public class turretVision : MonoBehaviour
 {
+
     public LayerMask mask;
     public float maxDist;
     public float shootCooldown;
@@ -18,12 +19,16 @@ public class turretVision : MonoBehaviour
     [Range(0.0f, 100.0f)]
     public float turnSpeed;
     [Header("Для просмотра")]
+    
     public bool reachedIdle;
+    public delegate void shootAction();
+    public static event shootAction onShot;
     public Vector3 randomPoint;
     public bool isVisible;
     public bool isShooting;
     public RaycastHit hit;
     public Vector3 dir;
+    public IEnumerator cor;
     [Header("Референсы")]
     
     
@@ -53,21 +58,24 @@ public class turretVision : MonoBehaviour
     }
     public void shoot() 
     {
-        
+        if (onShot != null)
+            onShot();
         GameObject b = Instantiate(bullet, fireHole.transform.position, head.transform.rotation);
         StartCoroutine(b.GetComponent<bulletMove>().startMove(bulletSpeed, bulletDur, dir));
     }
     public IEnumerator periodiclyShoot(float cooldown)
     {
+        
         isShooting = true;
         while (isVisible) 
         {
+            //Debug.Log("startMove running");
             yield return new WaitForSeconds(cooldown);
             shoot();
             isShooting = false;
             yield return new WaitForSeconds(cooldown);
         }
-        
+        isShooting = false;
         yield return null;
     }
     public void idle() 
@@ -110,7 +118,12 @@ public class turretVision : MonoBehaviour
         
         if (isVisible) 
         {
-            if (!isShooting) StartCoroutine(periodiclyShoot(shootCooldown));
+            if (!isShooting)
+            {
+                cor = periodiclyShoot(shootCooldown);
+                StopCoroutine(cor);
+                StartCoroutine(cor);
+            }
             target.transform.position = uter.transform.position;
         }
       
