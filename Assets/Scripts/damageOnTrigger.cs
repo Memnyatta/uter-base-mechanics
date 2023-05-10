@@ -25,10 +25,11 @@ public class damageOnTrigger : MonoBehaviour
 
         if (curDam == null) return;
         curDam.dealDamage(damage, gameObject.name);
-        Debug.Log("dealt damage");
+        
 
         if (onCol != null) 
         {
+            Debug.Log("onCol");
             onCol(gameObject);
             //onCol = null;
         }

@@ -21,7 +21,7 @@ public class turretVision : MonoBehaviour
     [Header("Для просмотра")]
     
     public bool reachedIdle;
-    
+    public float curDist;
     public Vector3 randomPoint;
     public bool isVisible;
     public bool isShooting;
@@ -44,6 +44,8 @@ public class turretVision : MonoBehaviour
     public string headName;
     public string targetName;
     public string uterName;
+    //[Header("test")]
+    //public List<string> t;
 
     // Start is called before the first frame update
     void Awake()
@@ -63,18 +65,19 @@ public class turretVision : MonoBehaviour
     }
     public IEnumerator periodiclyShoot(float cooldown)
     {
-        
+       
         isShooting = true;
         while (isVisible) 
         {
-            //Debug.Log("startMove running");
+           
             yield return new WaitForSeconds(cooldown);
             shoot();
-            isShooting = false;
+            
             yield return new WaitForSeconds(cooldown);
         }
         isShooting = false;
-        StopCoroutine(periodiclyShoot(cooldown));
+
+       
         yield return null;
     }
     public void idle() 
@@ -99,6 +102,7 @@ public class turretVision : MonoBehaviour
         dir = uter.transform.position - headAim.transform.position;
         Physics.Raycast(headAim.transform.position, dir, out hit, maxDist, mask);
         Debug.DrawLine(headAim.transform.position, uter.transform.position,Color.red);
+        curDist = Vector3.Distance(headAim.transform.position, uter.transform.position);
         if (hit.collider != null) 
         {
             if (hit.collider.gameObject.name == uterName)
@@ -121,7 +125,7 @@ public class turretVision : MonoBehaviour
             {
                 cor = periodiclyShoot(shootCooldown);
                 StopCoroutine(cor);
-                if (!isShooting)StartCoroutine(cor);
+                StartCoroutine(cor);
             }
             target.transform.position = uter.transform.position;
         }
