@@ -34,9 +34,9 @@ public class bulletMove : MonoBehaviour
         nextTime = Time.time + time;
         while (canMove)
         {
-            
-            //Debug.Log("startMove running");
-            // print(Time.time + " " + nextTime);
+
+            Quaternion rotation = Quaternion.LookRotation(dir, Vector3.up);
+            transform.rotation = rotation;
             charCont.Move(dir * speed * Time.deltaTime);
             yield return new WaitForSeconds(0.005f);
             if (Time.time > nextTime) { canMove = false; }
