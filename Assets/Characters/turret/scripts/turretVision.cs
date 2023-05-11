@@ -20,6 +20,7 @@ public class turretVision : MonoBehaviour
     public float turnSpeed;
     [Header("Для просмотра")]
     
+
     public bool reachedIdle;
     public float curDist;
     public Vector3 randomPoint;
@@ -28,6 +29,10 @@ public class turretVision : MonoBehaviour
     public RaycastHit hit;
     public Vector3 dir;
     public IEnumerator cor;
+
+    public delegate void shotAct(GameObject t);
+    public static event shotAct onShot;
+
     [Header("Референсы")]
     
     
@@ -59,7 +64,12 @@ public class turretVision : MonoBehaviour
     }
     public void shoot() 
     {
-        
+        if (onShot != null)
+        {
+            Debug.Log(gameObject.name + " shot");
+            onShot(gameObject);
+            //onCol = null;
+        }
         GameObject b = Instantiate(bullet, fireHole.transform.position, head.transform.rotation);
         StartCoroutine(b.GetComponent<bulletMove>().startMove(bulletSpeed, bulletDur, dir));
     }
