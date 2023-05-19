@@ -70,7 +70,7 @@ public class turretVision : MonoBehaviour
             onShot(gameObject);
             //onCol = null;
         }
-        GameObject b = Instantiate(bullet, fireHole.transform.position, head.transform.rotation);
+        GameObject b = Instantiate(bullet, fireHole.transform.position, Quaternion.identity);
         
         StartCoroutine(b.GetComponent<bulletMove>().startMove(bulletSpeed, bulletDur, dir));
     }
