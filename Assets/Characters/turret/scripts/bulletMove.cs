@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class bulletMove : MonoBehaviour
 {
-    //public float testS;
-    //public float testT;
-    //public Vector3 testD;
-
     
+
+
 
     [Header("--------")]
 
-    
+    //public GameObject r;
     public bool canMove;
     public float nextTime;
     public CharacterController charCont;
@@ -20,13 +18,14 @@ public class bulletMove : MonoBehaviour
     {
         
         
-        //Destroy(gameObject,1);
+        
     }
     // Start is called before the first frame update
     void Awake()
     {
         charCont = GetComponent<CharacterController>();
-        //StartCoroutine(startMove(testS, testT, testD));
+        //r = transform.Find("bulletBlaze").Find("r").gameObject;
+        
     }
     public IEnumerator startMove(float speed, float time, Vector3 dir)
     {
@@ -35,11 +34,11 @@ public class bulletMove : MonoBehaviour
         while (canMove)
         {
 
-            //Quaternion rotation = Quaternion.LookRotation(dir, Vector3.up);
+            Quaternion rotation = Quaternion.LookRotation(dir, Vector3.up);
             //transform.Rotate(dir);
 
-            
-            transform.LookAt(transform.position + dir);
+
+            transform.rotation = rotation;
             
 
             charCont.Move(dir * speed * Time.deltaTime);
