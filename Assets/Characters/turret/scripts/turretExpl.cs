@@ -23,7 +23,7 @@ public class turretExpl : MonoBehaviour
     }
     public void spawnPart(GameObject t) 
     {
-        Debug.Log("spawnPart");
+        //Debug.Log("spawnPart");
         Instantiate(explPart, t.transform.position, t.transform.rotation);
     }
     // Update is called once per frame

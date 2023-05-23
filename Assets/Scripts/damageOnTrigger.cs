@@ -10,42 +10,58 @@ public class damageOnTrigger : MonoBehaviour
     public float damage;
     public List<string> tags;
     public bool delOnDam;
+    public float destImmuneTime;
     [Header("Для просмотра")]
+    public bool canBeDest;
     public IDamageable curDam;
     public BoxCollider colBox;
     // Start is called before the first frame update
     void Awake()
     {
-        colBox = GetComponent<BoxCollider>(); 
+        colBox = GetComponent<BoxCollider>();
+        canBeDest = false;
+        StartCoroutine(destImmune());
+    }
+    public void collide(Collider other) 
+    {
+        if (onCol != null)
+        {
+            Debug.Log("Bullet: " + gameObject.name + " collided with " + other.gameObject.name);
+            onCol(gameObject);
+            //onCol = null;
+        }
+
+        if (delOnDam) Destroy(gameObject);
     }
     public void damaging(GameObject obj) 
     {
         curDam = null;
         curDam = obj.GetComponent<IDamageable>();
-
+        Debug.Log("Bullet: " + gameObject.name + " damaged " + obj.name);
         if (curDam == null) return;
         curDam.dealDamage(damage, gameObject.name);
-        
-
-        if (onCol != null) 
-        {
-            Debug.Log("onCol");
-            onCol(gameObject);
-            //onCol = null;
-        }
-           
-        if (delOnDam) Destroy(gameObject);
-         
-
-
     }
-    private void OnTriggerStay(Collider other)
+    public IEnumerator destImmune()
     {
-        if (tags.Contains(other.gameObject.tag))
+        yield return new WaitForSeconds(destImmuneTime);
+        canBeDest = true;
+        yield return null;
+    }
+
+
+        private void OnTriggerStay(Collider other)
+    {
+        if (canBeDest && other.gameObject != gameObject) 
         {
-            damaging(other.gameObject);
-            Debug.Log("Bullet collides " + other.gameObject.name);
+            if (tags.Contains(other.gameObject.tag) && canBeDest)
+            {
+                
+                damaging(other.gameObject);
+            }
+            collide(other);
         }
         
+        
+
     }
 }
