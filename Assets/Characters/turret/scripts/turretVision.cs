@@ -71,7 +71,7 @@ public class turretVision : MonoBehaviour
             //onCol = null;
         }
         GameObject b = Instantiate(bullet, fireHole.transform.position, Quaternion.identity);
-        
+        print(b.name);
         StartCoroutine(b.GetComponent<bulletMove>().startMove(bulletSpeed, bulletDur, dir));
     }
     public IEnumerator periodiclyShoot(float cooldown)
@@ -116,7 +116,7 @@ public class turretVision : MonoBehaviour
         curDist = Vector3.Distance(headAim.transform.position, uter.transform.position);
         if (hit.collider != null) 
         {
-            Debug.Log("Turret " + gameObject.name + " sees " + hit.collider.gameObject.name);
+            //Debug.Log("Turret " + gameObject.name + " sees " + hit.collider.gameObject.name);
             if (hit.collider.gameObject.name == uterName)
             {
                 isVisible = true;

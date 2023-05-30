@@ -14,12 +14,7 @@ public class bulletMove : MonoBehaviour
     public bool canMove;
     public float nextTime;
     public CharacterController charCont;
-    private void dest()
-    {
-        
-        
-        
-    }
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -31,21 +26,19 @@ public class bulletMove : MonoBehaviour
     {
 
         nextTime = Time.time + time;
-        while (canMove)
+        while (canMove )
         {
 
             Quaternion rotation = Quaternion.LookRotation(dir, Vector3.up);
             //transform.Rotate(dir);
 
-
-            transform.rotation = rotation;
-            
-
+            if (gameObject == null || gameObject.GetComponent<bulletMove>() == null) { yield return null; }
+           transform.rotation = rotation;
             charCont.Move(dir * speed * Time.deltaTime);
             yield return new WaitForSeconds(0.005f);
             if (Time.time > nextTime) { canMove = false; }
         }
-        dest();
+        
         yield return null;
     }
     // Update is called once per frame
