@@ -68,11 +68,10 @@ public class turretVision : MonoBehaviour
         {
             Debug.Log(gameObject.name + " shot");
             onShot(gameObject);
-            //onCol = null;
         }
         GameObject b = Instantiate(bullet, fireHole.transform.position, Quaternion.identity);
         print("Turret: " + gameObject.name + " shot at "+ uter.name);
-        StartCoroutine(b.GetComponent<bulletMove>().startMove(bulletSpeed, bulletDur, dir));
+        b.GetComponent<bulletMove>().DirSpeed(dir, bulletSpeed);
     }
     public IEnumerator periodiclyShoot(float cooldown)
     {

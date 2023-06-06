@@ -4,46 +4,36 @@ using UnityEngine;
 
 public class bulletMove : MonoBehaviour
 {
-    
-
-
-
     [Header("--------")]
-
-    //public GameObject r;
     public bool canMove;
     public float nextTime;
     public CharacterController charCont;
+    Vector3 direction;
+    float speed;
 
-    // Start is called before the first frame update
     void Awake()
     {
-        charCont = GetComponent<CharacterController>();
-        //r = transform.Find("bulletBlaze").Find("r").gameObject;
-        
+        charCont = GetComponent<CharacterController>();      
     }
-    public IEnumerator startMove(float speed, float time, Vector3 dir)
-    {
 
-        nextTime = Time.time + time;
-        while (canMove )
+    private void OnDestroy()
+    {
+        StopAllCoroutines();
+    }
+
+    public void DirSpeed(Vector3 dir, float sp)
+    {
+        direction = dir;
+        speed = sp;
+    }
+
+    private void Update()
+    {
+        if (canMove)
         {
-
-            Quaternion rotation = Quaternion.LookRotation(dir, Vector3.up);
-            //transform.Rotate(dir);
-
-            if (gameObject == null || gameObject.GetComponent<bulletMove>() == null) { yield return null; }
-           transform.rotation = rotation;
-            charCont.Move(dir * speed * Time.deltaTime);
-            yield return new WaitForSeconds(0.005f);
-            if (Time.time > nextTime) { canMove = false; }
+            Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
+            transform.rotation = rotation;
+            charCont.Move(direction * speed * Time.deltaTime);
         }
-        
-        yield return null;
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
