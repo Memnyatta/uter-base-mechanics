@@ -5131,12 +5131,14 @@ MonoBehaviour:
   - {x: -2, y: 1.5, z: -6}
   - {x: -2, y: 1.5, z: 6}
   turnSpeed: 0
+  redCubPos: {x: 0, y: 0, z: 0}
   reachedIdle: 0
   curDist: 0
   randomPoint: {x: 0, y: 0, z: 0}
   isVisible: 0
   isShooting: 0
   dir: {x: 0, y: 0, z: 0}
+  redCube: {fileID: 8531872214401917535, guid: c3effd9e87c1e5d449f9dc59e7e0ccd9, type: 3}
   bullet: {fileID: 3741430823895247172, guid: 546d06c3f2a89b04a9d9afa5ba21fa46, type: 3}
   fireHole: {fileID: 0}
   head: {fileID: 0}

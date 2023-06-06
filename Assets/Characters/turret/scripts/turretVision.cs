@@ -19,8 +19,8 @@ public class turretVision : MonoBehaviour
     [Range(0.0f, 100.0f)]
     public float turnSpeed;
     [Header("Для просмотра")]
-    
 
+    public Vector3 redCubPos;
     public bool reachedIdle;
     public float curDist;
     public Vector3 randomPoint;
@@ -34,8 +34,8 @@ public class turretVision : MonoBehaviour
     public static event shotAct onShot;
 
     [Header("Референсы")]
-    
-    
+
+    public GameObject redCube;
     public GameObject bullet;
     public GameObject fireHole;
     public GameObject head;
@@ -72,6 +72,7 @@ public class turretVision : MonoBehaviour
         }
         GameObject b = Instantiate(bullet, fireHole.transform.position, Quaternion.identity);
         print("Turret: " + gameObject.name + " shot at "+ uter.name);
+        Instantiate(redCube, redCubPos, Quaternion.identity);
         StartCoroutine(b.GetComponent<bulletMove>().startMove(bulletSpeed, bulletDur, dir));
     }
     public IEnumerator periodiclyShoot(float cooldown)
