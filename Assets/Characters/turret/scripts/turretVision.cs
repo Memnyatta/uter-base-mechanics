@@ -18,7 +18,7 @@ public class turretVision : MonoBehaviour
     
     [Range(0.0f, 100.0f)]
     public float turnSpeed;
-    [Header("Для просмотра")]
+    [Header("пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
 
     public Vector3 redCubPos;
     public bool reachedIdle;
@@ -33,7 +33,7 @@ public class turretVision : MonoBehaviour
     public delegate void shotAct(GameObject t);
     public static event shotAct onShot;
 
-    [Header("Референсы")]
+    [Header("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
 
     public GameObject redCube;
     public GameObject bullet;
@@ -43,7 +43,7 @@ public class turretVision : MonoBehaviour
     public GameObject target;
     public GameObject uter;
     public MultiAimConstraint multAim;
-    [Header("Для поиска референсов")]
+    [Header("пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     public string fireHoleName;
     public string headAimName;
     public string headName;
@@ -68,12 +68,10 @@ public class turretVision : MonoBehaviour
         {
             Debug.Log(gameObject.name + " shot");
             onShot(gameObject);
-            //onCol = null;
         }
         GameObject b = Instantiate(bullet, fireHole.transform.position, Quaternion.identity);
         print("Turret: " + gameObject.name + " shot at "+ uter.name);
-        Instantiate(redCube, redCubPos, Quaternion.identity);
-        StartCoroutine(b.GetComponent<bulletMove>().startMove(bulletSpeed, bulletDur, dir));
+        b.GetComponent<bulletMove>().DirSpeed(dir, bulletSpeed);
     }
     public IEnumerator periodiclyShoot(float cooldown)
     {
