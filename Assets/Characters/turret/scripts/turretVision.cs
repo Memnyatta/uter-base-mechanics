@@ -18,7 +18,7 @@ public class turretVision : MonoBehaviour
     
     [Range(0.0f, 100.0f)]
     public float turnSpeed;
-    [Header("��� ���������")]
+    [Header("Для просмотра")]
 
     public Vector3 redCubPos;
     public bool reachedIdle;
@@ -33,7 +33,7 @@ public class turretVision : MonoBehaviour
     public delegate void shotAct(GameObject t);
     public static event shotAct onShot;
 
-    [Header("���������")]
+    [Header("Референсы")]
 
     public GameObject redCube;
     public GameObject bullet;
@@ -43,7 +43,7 @@ public class turretVision : MonoBehaviour
     public GameObject target;
     public GameObject uter;
     public MultiAimConstraint multAim;
-    [Header("��� ������ ����������")]
+    [Header("Названия для поиска")]
     public string fireHoleName;
     public string headAimName;
     public string headName;
@@ -79,7 +79,8 @@ public class turretVision : MonoBehaviour
         isShooting = true;
         while (isVisible) 
         {
-           
+            Instantiate(redCube, redCubPos, Quaternion.identity);
+            Debug.Log("Turret " + gameObject.name + " is about to shoot " + uter.name);
             yield return new WaitForSeconds(cooldown);
             shoot();
             
