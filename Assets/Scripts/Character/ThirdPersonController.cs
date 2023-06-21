@@ -5,6 +5,9 @@ using UnityEngine.InputSystem;
 
 public class ThirdPersonController : MonoBehaviour
 {
+    public delegate void jumpAct();
+    public static event jumpAct onJump;
+
     public CharacterController _controller;
     [SerializeField]
     private Transform cam;
@@ -259,6 +262,11 @@ public class ThirdPersonController : MonoBehaviour
 
         if(Input.GetButtonDown("Jump") && isGrounded && canWalk)
         {
+            if (onJump != null)
+            {
+                onJump();
+                //onCol = null;
+            }
             velocity.y = Mathf.Sqrt(jumpHeigh * -2f * gravity);
         }
 
