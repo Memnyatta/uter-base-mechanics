@@ -40,7 +40,7 @@ public class health : MonoBehaviour, IDamageable
         curHealth += heal;
         if (curHealth > maxHealth) { curHealth = maxHealth; }
     }
-    public void death() 
+    public virtual void death() 
     {
         Debug.Log(gameObject.name + " died");
     }
