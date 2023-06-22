@@ -26,7 +26,7 @@ public class damageOnTrigger : MonoBehaviour
     {
         if (onCol != null)
         {
-            Debug.Log("Damage trigger: " + gameObject.name + " collided with " + other.gameObject.name);
+           //Debug.Log("Damage trigger: " + gameObject.name + " collided with " + other.gameObject.name);
             onCol(gameObject);
             //onCol = null;
         }
@@ -37,7 +37,7 @@ public class damageOnTrigger : MonoBehaviour
     {
         curDam = null;
         curDam = obj.GetComponent<IDamageable>();
-        Debug.Log("Damage trigger: " + gameObject.name + " damaged " + obj.name);
+       // Debug.Log("Damage trigger: " + gameObject.name + " damaged " + obj.name);
         if (curDam == null) return;
         curDam.dealDamage(damage, gameObject.name);
     }
@@ -54,7 +54,7 @@ public class damageOnTrigger : MonoBehaviour
         //Debug.Log(other.gameObject);
         if (canBeDest && other.gameObject != gameObject) 
         {
-            Debug.Log(other.gameObject.tag + other.gameObject.name);
+            //Debug.Log(other.gameObject.tag + other.gameObject.name);
             if (tags.Contains(other.gameObject.tag) && canBeDest)
             {
                 
