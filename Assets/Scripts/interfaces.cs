@@ -10,7 +10,8 @@ public interface IDamageable
     bool isInvincible { get; }
     public IEnumerator makeInvincible(float time);
     public float invAftHit { get; set; }
-    public void dealDamage(float damage, string source);
+    public GameObject lastAttacker { get; set; }
+    public void dealDamage(float damage, GameObject source);
     public void dealHeal(float heal, string source);
     public void death();
 }

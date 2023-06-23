@@ -39,7 +39,7 @@ public class damageOnTrigger : MonoBehaviour
         curDam = obj.GetComponent<IDamageable>();
        // Debug.Log("Damage trigger: " + gameObject.name + " damaged " + obj.name);
         if (curDam == null) return;
-        curDam.dealDamage(damage, gameObject.name);
+        curDam.dealDamage(damage, gameObject);
     }
     public IEnumerator destImmune()
     {

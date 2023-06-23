@@ -15,6 +15,7 @@ public class health : MonoBehaviour, IDamageable
     public bool isInvincible { get; set; }
     public float maxHealth { get; set; }
     public float curHealth { get; set; }
+    public GameObject lastAttacker { get; set; }
     public IEnumerator makeInvincible(float time)
     {
         isInvincible = true;
@@ -28,8 +29,9 @@ public class health : MonoBehaviour, IDamageable
         invAftHit = pubinvAftHit;
         //curHealth = pubcurHealth;
     }
-    public void dealDamage(float damage, string source)  //My source is what i made it the fuck up
+    public void dealDamage(float damage, GameObject source)  //My source is what i made it the fuck up
     {
+        lastAttacker = source;
         if (isInvincible) return;
         curHealth -= damage;
         if (curHealth <= 0) { death(); curHealth = 0; }

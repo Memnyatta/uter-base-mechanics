@@ -1,16 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class destrHealth : health
 {
+    [Header("BlastForce - Сила разлета во все стороны")]
+    [Header("DirectForce - Влияние положения игрока на траекторию")]
     public float blastForce;
-    public float disappearTime;
+    public float directForce;
+    public float liveTime;
+    public UnityEvent onDest;
     [Header("Для просмотра")]
-    public MeshRenderer meshRend;
-    public Collider col;
-    public GameObject allPieces;
-    public List<Rigidbody> pieces;
+    
+    public MeshRenderer meshRend; //Визуальный меш объекта
+    public Collider col; //Коллайдер объекта
+    public GameObject allPieces; //От этого объекта зависят все невидимые куски
+    public List<Rigidbody> pieces; //Список всех кусков
 
     public IEnumerator waitForDest(float time)
     {
@@ -38,10 +44,13 @@ public class destrHealth : health
         allPieces.SetActive(true);
         foreach (Rigidbody r in pieces) 
         {
-            r.AddForce(Vector3.up * blastForce);
+            Vector3 dir = (transform.position - lastAttacker.transform.position) * directForce + (r.transform.position - transform.position) * blastForce;
+            r.AddForce(dir);
         }
-        Debug.Log(gameObject.name + " destroyed");
-        waitForDest(disappearTime);
+        Debug.Log(gameObject.name + " destroyed by " + lastAttacker.name);
+        waitForDest(liveTime);
+
+        if (onDest != null) onDest.Invoke();
     }
     void FixedUpdate()
     {
