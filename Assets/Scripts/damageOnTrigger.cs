@@ -21,17 +21,12 @@ public class damageOnTrigger : MonoBehaviour
         colBox = GetComponent<BoxCollider>();
         canBeDest = false;
         StartCoroutine(destImmune());
+        
     }
     public void collide(Collider other) 
     {
-        if (onCol != null)
-        {
-           //Debug.Log("Damage trigger: " + gameObject.name + " collided with " + other.gameObject.name);
-            onCol(gameObject);
-            //onCol = null;
-        }
-
-        if (delOnDam) Destroy(gameObject);
+        if (onCol != null) {onCol(gameObject);}
+        if (delOnDam) { Destroy(gameObject); }
     }
     public void damaging(GameObject obj) 
     {
@@ -49,21 +44,15 @@ public class damageOnTrigger : MonoBehaviour
     }
 
 
-        private void OnTriggerStay(Collider other)
+ private void OnTriggerStay(Collider other)
     {
-        //Debug.Log(other.gameObject);
         if (canBeDest && other.gameObject != gameObject) 
         {
-            //Debug.Log(other.gameObject.tag + other.gameObject.name);
             if (tags.Contains(other.gameObject.tag) && canBeDest)
             {
-                
                 damaging(other.gameObject);
             }
             collide(other);
-        }
-        
-        
-
+        }   
     }
 }
