@@ -48,7 +48,7 @@ public class damageOnTrigger : MonoBehaviour
     {
         if (canBeDest && other.gameObject != gameObject) 
         {
-            if (tags.Contains(other.gameObject.tag) && canBeDest)
+            if (tags.Contains(other.gameObject.tag))
             {
                 damaging(other.gameObject);
             }

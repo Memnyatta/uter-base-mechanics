@@ -2,25 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class uterDamageOnJump : damageOnTrigger
 {
+    public bool hasDamaged;
+    GameObject uter;
+    public ThirdPersonController tpContr;
+    [Header("Для просмотра")]
+    public float minYVel;
     // Start is called before the first frame update
     void Awake()
     {
         colBox = GetComponent<BoxCollider>();
         canBeDest = false;
         StartCoroutine(destImmune());
+        uter = transform.parent.gameObject;
+        tpContr = uter.GetComponent<ThirdPersonController>();
     }
-
+    
     private void OnTriggerStay(Collider other)
     {
-        if (canBeDest && other.gameObject != gameObject)
+        bool can = canBeDest && other.gameObject != gameObject && !hasDamaged && tags.Contains(other.gameObject.tag) && !tpContr.isGrounded && tpContr.velocity.y < -1 * Mathf.Abs(minYVel);
+        if (can)
         {
-            if (tags.Contains(other.gameObject.tag) && canBeDest)
-            {
                 damaging(other.gameObject);
-            }
-            collide(other);
+                collide(other);
+                hasDamaged = true;  
         }
+    }
+    private void FixedUpdate()
+    {
+        if (tpContr.isGrounded) { hasDamaged = false; }
     }
 }
