@@ -28,7 +28,7 @@ public class damageOnTrigger : MonoBehaviour
         if (onCol != null) {onCol(gameObject);}
         if (delOnDam) { Destroy(gameObject); }
     }
-    public void damaging(GameObject obj) 
+    public virtual void damaging(GameObject obj) 
     {
         curDam = null;
         curDam = obj.GetComponent<IDamageable>();

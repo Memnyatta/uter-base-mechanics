@@ -10,6 +10,7 @@ public class uterDamageOnJump : damageOnTrigger
     public ThirdPersonController tpContr;
     [Header("Для просмотра")]
     public float minYVel;
+    public float jumpHeight;
     // Start is called before the first frame update
     void Awake()
     {
@@ -19,7 +20,15 @@ public class uterDamageOnJump : damageOnTrigger
         uter = transform.parent.gameObject;
         tpContr = uter.GetComponent<ThirdPersonController>();
     }
-    
+    public override void damaging(GameObject obj)
+    {
+        curDam = null;
+        curDam = obj.GetComponent<IDamageable>();
+        // Debug.Log("Damage trigger: " + gameObject.name + " damaged " + obj.name);
+        if (curDam == null) return;
+        curDam.dealDamage(damage, gameObject);
+        tpContr.velocity.y = jumpHeight;
+    }
     private void OnTriggerStay(Collider other)
     {
         bool can = canBeDest && other.gameObject != gameObject && !hasDamaged && tags.Contains(other.gameObject.tag) && !tpContr.isGrounded && tpContr.velocity.y < -1 * Mathf.Abs(minYVel);
