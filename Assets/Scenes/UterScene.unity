@@ -187,7 +187,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pubinvAftHit: 1
-  pubmaxHealth: 3
+  pubmaxHealth: 12
   pubcurHealth: 0
   pubisInvincible: 0
   blastForce: 100
@@ -1070,7 +1070,8 @@ MonoBehaviour:
   colBox: {fileID: 0}
   hasDamaged: 0
   tpContr: {fileID: 0}
-  minYVel: -1
+  minYVel: -2
+  jumpHeight: 3
 --- !u!1 &651744294 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: eb460a4120c19f948b1389a75366b0f0, type: 3}
@@ -1588,7 +1589,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.18500316, y: -0.0000000146439385, z: 0.0000000027567622, w: 0.98273796}
+  m_LocalRotation: {x: 0.18500316, y: 0.0000000146439385, z: -0.0000000027567622, w: 0.98273796}
   m_LocalPosition: {x: -4.7420006, y: 1.4825397, z: -4.259}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2664,11 +2665,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8535461904508971732, guid: 5b18a5a7a8335574c9ffb60b9f558f71, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.0000000146439385
+      value: 0.0000000146439385
       objectReference: {fileID: 0}
     - target: {fileID: 8535461904508971732, guid: 5b18a5a7a8335574c9ffb60b9f558f71, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0000000027567617
+      value: -0.0000000027567617
       objectReference: {fileID: 0}
     - target: {fileID: 8535461905558537733, guid: 5b18a5a7a8335574c9ffb60b9f558f71, type: 3}
       propertyPath: m_LocalRotation.x

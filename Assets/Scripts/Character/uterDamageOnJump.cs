@@ -31,7 +31,7 @@ public class uterDamageOnJump : damageOnTrigger
     }
     private void OnTriggerStay(Collider other)
     {
-        bool can = canBeDest && other.gameObject != gameObject && !hasDamaged && tags.Contains(other.gameObject.tag) && !tpContr.isGrounded && tpContr.velocity.y < -1 * Mathf.Abs(minYVel);
+        bool can = canBeDest && other.gameObject != gameObject && !hasDamaged && tags.Contains(other.gameObject.tag) && !tpContr.isGrounded && tpContr.velocity.y < minYVel;
         if (can)
         {
                 damaging(other.gameObject);
