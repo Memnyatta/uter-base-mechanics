@@ -46,13 +46,11 @@ public class damageOnTrigger : MonoBehaviour
 
  private void OnTriggerStay(Collider other)
     {
-        if (canBeDest && other.gameObject != gameObject) 
+        bool can = canBeDest && other.gameObject != gameObject && tags.Contains(other.gameObject.tag);
+        if (can)
         {
-            if (tags.Contains(other.gameObject.tag))
-            {
-                damaging(other.gameObject);
-            }
-            collide(other);
-        }   
+            damaging(other.gameObject);
+            collide(other);     
+        }  
     }
 }
