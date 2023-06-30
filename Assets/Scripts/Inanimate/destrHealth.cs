@@ -2,7 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-
+/*
+ * (Writing in English so if everything breaks the text will remain)
+ * Health for destructable objects
+ * To setup: 
+ * 1)Create a model 
+ * 2)Attach script, add a "destructable" tag 
+ * 3)Make a blank child
+ * 4)Add pieces (as children) to said child (Make sure each piece has Rigidbody)
+ * 5)Deactivate the child
+ * 6)Drag the child to "allPieces"
+ * 
+ * */
 public class destrHealth : health
 {
     [Header("BlastForce - Сила разлета во все стороны")]
