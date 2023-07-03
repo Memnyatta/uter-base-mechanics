@@ -365,6 +365,7 @@ GameObject:
   - component: {fileID: 289296106}
   - component: {fileID: 289296108}
   - component: {fileID: 289296107}
+  - component: {fileID: 289296109}
   m_Layer: 0
   m_Name: robot
   m_TagString: Untagged
@@ -423,7 +424,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  uterName: uter
+  uterName: Uter
   uter: {fileID: 0}
   navAgent: {fileID: 0}
 --- !u!65 &289296107
@@ -459,9 +460,33 @@ MonoBehaviour:
   canBeDest: 0
   colBox: {fileID: 0}
   spawnOffset: {x: 0, y: 0.5, z: 0}
+  explTrigger: expl
   throwForce: 10
   corspe: {fileID: 5656942841834721066, guid: 8cc8984e236741c4ca6dc6baebcc0374, type: 3}
   explos: {fileID: 5262413090924210576, guid: e8de58e03567a1648a39fcbd20342f76, type: 3}
+  navAgent: {fileID: 0}
+  anim: {fileID: 0}
+--- !u!95 &289296109
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 289296103}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3faa87fac3e234642909b0772d480eeb, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &584212376
 GameObject:
   m_ObjectHideFlags: 0

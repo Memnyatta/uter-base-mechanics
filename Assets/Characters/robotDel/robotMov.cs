@@ -16,7 +16,8 @@ public class robotMov : MonoBehaviour
         uter = GameObject.Find(uterName);
         navAgent = GetComponent<NavMeshAgent>();
         navAgent.speed = speed;
-        
+
+        setDest(uter.transform.position);
     }
     public virtual void setDest(Vector3 v) 
     {
