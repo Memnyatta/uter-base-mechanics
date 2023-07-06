@@ -284,5 +284,6 @@ public class ThirdPersonController : MonoBehaviour
                 _controller.Move(moveDir.normalized * speed * Time.deltaTime);
             }
         }
+    
     }
 }

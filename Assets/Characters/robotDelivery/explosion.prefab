@@ -43311,6 +43311,7 @@ GameObject:
   - component: {fileID: 5460236479519240152}
   - component: {fileID: 5252843551793658798}
   - component: {fileID: 5229301685022579590}
+  - component: {fileID: -3389026433420981427}
   m_Layer: 0
   m_Name: explosion
   m_TagString: Untagged
@@ -48145,9 +48146,9 @@ SphereCollider:
   m_GameObject: {fileID: 5262413090924210576}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.91
+  m_Radius: 1.1
   m_Center: {x: 0, y: 0.82, z: 0}
 --- !u!114 &5229301685022579590
 MonoBehaviour:
@@ -48162,6 +48163,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathtimer: 3
+--- !u!114 &-3389026433420981427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5262413090924210576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59491cb6f8b1a6e4ba66014c2ca66066, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  tags:
+  - Player
+  delOnDam: 0
+  destImmuneTime: 0
+  canBeDest: 0
+  colBox: {fileID: 0}
+  pushStr: 4
 --- !u!1 &5262413092228144550
 GameObject:
   m_ObjectHideFlags: 0
