@@ -9,33 +9,45 @@ using UnityEngine.AI;
  */
 public class robotMov : MonoBehaviour
 {
+    public string explTrigger;
     public float speed;
     public string uterName;
     public float pastUterMod;
+    public float minDist;
     [Header("Для просмотра")]
+    public Vector3 endPoint;
+    public Animator anim;
     public GameObject uter;
     public NavMeshAgent navAgent;
     // Start is called before the first frame update
-    public Vector3 setDest(GameObject utr) 
+    public Vector3 dest(GameObject utr) 
     {
         Vector3 end = utr.transform.position + (utr.transform.position - transform.position) * pastUterMod;
         return end;
     }
     void Awake()
     {
+        anim = GetComponent<Animator>();
         uter = GameObject.Find(uterName);
         navAgent = GetComponent<NavMeshAgent>();
         navAgent.speed = speed;
-
-        setDest(setDest(uter));
+        endPoint = dest(uter);
+        setDest(endPoint);
+    }
+    public void endedWay() 
+    {
+        anim.SetTrigger(explTrigger);
     }
     public virtual void setDest(Vector3 v) 
     {
         navAgent.SetDestination(v);
     }
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        
+        if (Vector3.Distance(transform.position, endPoint) < minDist) 
+        {
+            endedWay();
+        }
     }
 }

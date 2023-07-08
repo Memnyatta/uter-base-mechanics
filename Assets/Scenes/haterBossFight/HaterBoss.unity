@@ -363,6 +363,7 @@ GameObject:
   - component: {fileID: 289296104}
   - component: {fileID: 289296105}
   - component: {fileID: 289296106}
+  - component: {fileID: 289296108}
   - component: {fileID: 289296107}
   - component: {fileID: 289296109}
   m_Layer: 0
@@ -422,8 +423,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e36fb5abd1a2ddd41bc8e256c49f4371, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  explTrigger: expl
   speed: 5
   uterName: Uter
+  pastUterMod: 2
+  minDist: 5
+  endPoint: {x: 0, y: 0, z: 0}
+  anim: {fileID: 0}
   uter: {fileID: 0}
   navAgent: {fileID: 0}
 --- !u!65 &289296107
@@ -434,11 +440,38 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 289296103}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 0.64, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &289296108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 289296103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b00a6d489d5297f4fb178e1565aa834c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  tags:
+  - Player
+  delOnDam: 1
+  destImmuneTime: 0
+  canBeDest: 0
+  colBox: {fileID: 0}
+  pushStr: 2
+  spawnOffset: {x: 0, y: 0.1, z: 0}
+  explTrigger: expl
+  throwForce: 10
+  corspe: {fileID: 5656942841834721066, guid: 8cc8984e236741c4ca6dc6baebcc0374, type: 3}
+  explos: {fileID: 5262413090924210576, guid: e8de58e03567a1648a39fcbd20342f76, type: 3}
+  navAgent: {fileID: 0}
+  anim: {fileID: 0}
 --- !u!95 &289296109
 Animator:
   serializedVersion: 5
@@ -910,7 +943,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67d12320948292e49811d2129f9b1f17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pubinvAftHit: 1
+  pubinvAftHit: 0.2
   pubmaxHealth: 3
   pubcurHealth: 0
   pubisInvincible: 0

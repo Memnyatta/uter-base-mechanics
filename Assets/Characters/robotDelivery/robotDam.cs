@@ -12,10 +12,12 @@ public class robotDam : damWithpush
     public Vector3 spawnOffset;
     public string explTrigger;
     public float throwForce;
+    
     [Header("Префабы")]
     public GameObject corspe;
     public GameObject explos;
     [Header("Для просмотра")]
+    
     public NavMeshAgent navAgent;
     public Animator anim;
     // Start is called before the first frame update
@@ -47,6 +49,10 @@ public class robotDam : damWithpush
             rb.AddForce(rand * throwForce);
             Destroy(gameObject);
         }
+    }
+    private void FixedUpdate()
+    {
+       // if (Vector3.Distance(transform.position,))
     }
     private void OnTriggerStay(Collider other)
     {
