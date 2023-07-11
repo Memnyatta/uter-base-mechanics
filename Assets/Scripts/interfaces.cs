@@ -15,3 +15,8 @@ public interface IDamageable
     public void dealHeal(float heal, string source);
     public void death();
 }
+
+public interface IThrowable
+{ 
+
+}
