@@ -1513,6 +1513,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1799586435597081078, guid: 8cc8984e236741c4ca6dc6baebcc0374, type: 3}
+      propertyPath: m_Drag
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5029024513276188048, guid: 8cc8984e236741c4ca6dc6baebcc0374, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -1561,6 +1565,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: robotCorpse
       objectReference: {fileID: 0}
+    - target: {fileID: 6285785655497941797, guid: 8cc8984e236741c4ca6dc6baebcc0374, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: 222d5eded0025d34db4de40201ce33c9, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8cc8984e236741c4ca6dc6baebcc0374, type: 3}
 --- !u!1 &1782296929
@@ -1832,12 +1840,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 738d1ea392c5b3d458a514f5eeba9a7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dragDurSpin: 0
-  spinClosingForce: 0
+  dragDurSpin: 2
+  spinClosingForce: 3
+  rotateSpeed: 650
+  dragOffset: 0.3
+  yOffset: 0.2
   plTags:
   - Player
   spinBool: iSSpinning
   playerName: Uter
+  rb: {fileID: 0}
   isSpinning: 0
   uter: {fileID: 0}
   anim: {fileID: 0}
