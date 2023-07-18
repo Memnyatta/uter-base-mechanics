@@ -14,6 +14,7 @@ public class pickableRobotDel : MonoBehaviour, IThrowable
     public string playerName;
     [Header("Для просмотра")]
     public Rigidbody rb;
+    public bool canSpin;
     public bool isSpinning;
     public GameObject uter;
     public Animator anim;
@@ -33,21 +34,25 @@ public class pickableRobotDel : MonoBehaviour, IThrowable
     public void stopSpin()
     {
         anim.SetBool(spinBool, false);
-        isSpinning = false;
+        
     }
     private void OnTriggerEnter(Collider other)
     {    
          if (plTags.Contains(other.gameObject.tag) && !anim.GetBool(spinBool))
         {
-                startSpin();
+            canSpin = true;
         }
+        else { canSpin = false; }
 
     }
     // Update is called once per frame
     void FixedUpdate()
     {
-
-        if (anim.GetBool(spinBool)) 
+        if (canSpin && Input.GetButtonUp("Fire1")) 
+        {
+            startSpin();
+        }
+        if (anim.GetBool(spinBool) && isSpinning) 
         {
             uter.transform.Rotate(Vector3.up * rotateSpeed * Time.deltaTime, Space.Self);
 
