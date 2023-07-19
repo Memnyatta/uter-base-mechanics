@@ -38,16 +38,17 @@ public class pickableRobotDel : MonoBehaviour, IThrowable
     }
     public IEnumerator goForw(float dur)
     {
+        Debug.Log("Stopped spinnning");
         hasThrown = true;
-        //nonTriggerCol.isTrigger = true;
         Vector3 nV3 = arrowObj.transform.position + arrowObj.transform.forward * throwForce + throwOffset;
         float nextTime = Time.time + dur;
+        Vector3 dirr = nV3 - new Vector3(transform.position.x, nV3.y, transform.position.z);
         while (Time.time < nextTime)
         {
-            rb.AddForce(nV3 - new Vector3(transform.position.x, nV3.y, transform.position.z));
+            rb.AddForce(dirr);
         }
         //yield return new WaitForSeconds();
-        Destroy(gameObject);
+        
         yield return null;
     }
     public void startSpin() 
@@ -57,6 +58,7 @@ public class pickableRobotDel : MonoBehaviour, IThrowable
     }
     public void stopSpin()
     {
+       
         isSpinning = false;
         anim.SetBool(spinBool, false);
         
@@ -81,17 +83,22 @@ public class pickableRobotDel : MonoBehaviour, IThrowable
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (isSpinning && Input.GetButtonUp("Fire1") && !hasThrown)
+        if (Input.GetButtonDown("Fire1")) 
         {
-            goForw(2);
-            //throwCorpse();
-            stopSpin();
-        }
-        if (canSpin && Input.GetButtonUp("Fire1") && !hasThrown) 
-        {
-            startSpin();
-        }
-        
+            if (isSpinning && !hasThrown)
+            {
+                //Debug.Log("Stopped spinnning");
+                stopSpin();
+                StartCoroutine(goForw(10));
+                //throwCorpse();
+
+            }
+            else if (canSpin && !hasThrown && !isSpinning) 
+            {
+                //Debug.Log("2");
+                startSpin();
+            }
+        }       
         if (anim.GetBool(spinBool) && isSpinning && !hasThrown) 
         {
             arrowMove();
