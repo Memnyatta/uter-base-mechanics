@@ -4,19 +4,24 @@ using UnityEngine;
 
 public class pickableRobotDel : MonoBehaviour, IThrowable
 {
-    
+    public Vector3 throwOffset;
+    [Header("Float-ы")]
+    public float throwForce;
     public float dragDurSpin;
     public float spinClosingForce;
     public float rotateSpeed;
     public float dragOffset;
     public float yOffset;
+    [Header("String-и")]
     public string spinBool;
     public string playerName;
     public string arrowOName;
     public List<string> plTags;
     public List<string> enemyTags;
     [Header("Для просмотра")]
+    public BoxCollider nonTriggerCol;
     public Rigidbody rb;
+    public bool hasThrown;
     public bool canDealDam;
     public bool canSpin;
     public bool isSpinning;
@@ -31,6 +36,20 @@ public class pickableRobotDel : MonoBehaviour, IThrowable
         rb = GetComponent<Rigidbody>();
         arrowObj = GameObject.Find(arrowOName);
     }
+    public IEnumerator goForw(float dur)
+    {
+        hasThrown = true;
+        //nonTriggerCol.isTrigger = true;
+        Vector3 nV3 = arrowObj.transform.position + arrowObj.transform.forward * throwForce + throwOffset;
+        float nextTime = Time.time + dur;
+        while (Time.time < nextTime)
+        {
+            rb.AddForce(nV3 - new Vector3(transform.position.x, nV3.y, transform.position.z));
+        }
+        //yield return new WaitForSeconds();
+        Destroy(gameObject);
+        yield return null;
+    }
     public void startSpin() 
     {
         anim.SetBool(spinBool, true);
@@ -44,7 +63,11 @@ public class pickableRobotDel : MonoBehaviour, IThrowable
     }
     public void throwCorpse() 
     {
-    
+        hasThrown = true;
+        //nonTriggerCol.isTrigger = true;
+        Vector3 nV3 = arrowObj.transform.position + arrowObj.transform.forward * throwForce + throwOffset;
+        
+        rb.AddForce(nV3 - new Vector3(transform.position.x, nV3.y, transform.position.z));
     }
     private void OnTriggerEnter(Collider other)
     {    
@@ -58,16 +81,18 @@ public class pickableRobotDel : MonoBehaviour, IThrowable
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (isSpinning && Input.GetButtonUp("Fire1"))
+        if (isSpinning && Input.GetButtonUp("Fire1") && !hasThrown)
         {
+            goForw(2);
+            //throwCorpse();
             stopSpin();
         }
-        if (canSpin && Input.GetButtonUp("Fire1")) 
+        if (canSpin && Input.GetButtonUp("Fire1") && !hasThrown) 
         {
             startSpin();
         }
         
-        if (anim.GetBool(spinBool) && isSpinning) 
+        if (anim.GetBool(spinBool) && isSpinning && !hasThrown) 
         {
             arrowMove();
 
@@ -90,4 +115,5 @@ public class pickableRobotDel : MonoBehaviour, IThrowable
     {
         
     }
+    
 }
