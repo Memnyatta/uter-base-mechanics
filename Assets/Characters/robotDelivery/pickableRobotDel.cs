@@ -6,6 +6,7 @@ public class pickableRobotDel : MonoBehaviour, IThrowable
 {
     public Vector3 throwOffset;
     [Header("Float-û")]
+    public float throwedDur;
     public float throwForce;
     public float dragDurSpin;
     public float spinClosingForce;
@@ -28,6 +29,7 @@ public class pickableRobotDel : MonoBehaviour, IThrowable
     public Animator anim;
     public GameObject uter;
     public GameObject arrowObj;
+    public Vector3 dirr;
     // Start is called before the first frame update
     void Awake()
     {
@@ -42,15 +44,9 @@ public class pickableRobotDel : MonoBehaviour, IThrowable
         hasThrown = true;
         Vector3 nV3 = arrowObj.transform.position + arrowObj.transform.forward * throwForce + throwOffset;
         float nextTime = Time.time + dur;
-        Vector3 dirr = nV3 - new Vector3(transform.position.x, nV3.y, transform.position.z);
-        bool c = true;
-        while (c)
-        {
-            if (Time.time > nextTime) { c = false;  break; }
-            rb.AddForce(dirr);
-        }
-        //yield return new WaitForSeconds();
-        
+        dirr = nV3 - new Vector3(transform.position.x, nV3.y, transform.position.z);
+        yield return new WaitForSeconds(throwedDur);
+        dirr = Vector3.zero;
         yield return null;
     }
     public void startSpin() 
@@ -111,7 +107,12 @@ public class pickableRobotDel : MonoBehaviour, IThrowable
             rb.AddForce((dragToPos - transform.position) * spinClosingForce, ForceMode.VelocityChange);
         }
         
-        
+        if (dirr != Vector3.zero) 
+        {
+            
+            rb.AddForce(dirr* throwForce); 
+        }
+        Debug.DrawRay(transform.position, dirr * 999, Color.red);
     }
     public void arrowMove() 
     {
