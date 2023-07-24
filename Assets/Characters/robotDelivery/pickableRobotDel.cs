@@ -43,9 +43,10 @@ public class pickableRobotDel : MonoBehaviour, IThrowable
         Vector3 nV3 = arrowObj.transform.position + arrowObj.transform.forward * throwForce + throwOffset;
         float nextTime = Time.time + dur;
         Vector3 dirr = nV3 - new Vector3(transform.position.x, nV3.y, transform.position.z);
-        while (true)
+        bool c = true;
+        while (c)
         {
-            if (Time.time > nextTime) { break; }
+            if (Time.time > nextTime) { c = false;  break; }
             rb.AddForce(dirr);
         }
         //yield return new WaitForSeconds();
