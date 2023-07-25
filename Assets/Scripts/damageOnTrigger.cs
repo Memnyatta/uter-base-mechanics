@@ -23,7 +23,7 @@ public class damageOnTrigger : MonoBehaviour
         StartCoroutine(destImmune());
         
     }
-    public void collide(Collider other) 
+    public virtual void collide(Collider other) 
     {
         if (onCol != null) {onCol(gameObject);}
         if (delOnDam) { Destroy(gameObject); }
