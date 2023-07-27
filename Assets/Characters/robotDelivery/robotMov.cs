@@ -9,11 +9,17 @@ using UnityEngine.AI;
  */
 public class robotMov : MonoBehaviour
 {
-    public string explTrigger;
-    public float speed;
     public string uterName;
+    public string explAnimTrigger;
+    public Vector3 corpseOffset;
+    public Vector3 minCorpseLaunch;
+    public Vector3 maxCorpseLaunch;
+    public float corpseLaunchForce;
+    public float speed;
     public float pastUterMod;
     public float minDist;
+    public GameObject expl;
+    public GameObject corpse;
     [Header("Для просмотра")]
     public Vector3 endPoint;
     public Animator anim;
@@ -36,7 +42,17 @@ public class robotMov : MonoBehaviour
     }
     public void endedWay() 
     {
-        anim.SetTrigger(explTrigger);
+        anim.SetTrigger(explAnimTrigger);
+        navAgent.enabled = false;
+    }
+    public void explosion() 
+    {
+        Instantiate(expl, transform.position, Quaternion.identity);
+        Destroy(gameObject);
+
+        Rigidbody rb = Instantiate(corpse, transform.position + corpseOffset, Quaternion.identity).GetComponent<Rigidbody>();
+        Vector3 randDir = new Vector3(Random.Range(minCorpseLaunch.x, maxCorpseLaunch.x), Random.Range(minCorpseLaunch.y, maxCorpseLaunch.y), Random.Range(minCorpseLaunch.z, maxCorpseLaunch.z));
+        rb.AddForce(randDir * corpseLaunchForce);
     }
     public virtual void setDest(Vector3 v) 
     {
@@ -45,7 +61,7 @@ public class robotMov : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (Vector3.Distance(transform.position, endPoint) < minDist) 
+        if (Vector3.Distance(transform.position, endPoint) < minDist || Vector3.Distance(transform.position, uter.transform.position) < minDist) 
         {
             endedWay();
         }
