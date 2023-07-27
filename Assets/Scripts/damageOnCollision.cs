@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Events;
 using UnityEngine;
 
 public class damageOnCollision : damageOnTrigger
 {
+    
     [Header("-damageOnCollision-")]
+    public UnityEvent onColEvent;
     public float bounceForce;
     public Rigidbody rb;
     void Awake()
@@ -24,6 +27,8 @@ public class damageOnCollision : damageOnTrigger
             collide(other.collider);
             Vector3 bounceDir = transform.position - other.gameObject.transform.position;
             rb.AddForce(bounceDir * bounceForce, ForceMode.Force);
+
+            onColEvent.Invoke();
         }
     }
 }

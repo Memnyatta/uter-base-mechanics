@@ -23,6 +23,8 @@ public class pickableRobotDel : MonoBehaviour, IThrowable
     public List<string> tagsAfterThrowing;
     public List<string> plTags;
     public List<string> enemyTags;
+    [Header("Префабы")]
+    public GameObject expl;
     [Header("Для просмотра")]
     public damageOnCollision damOnCol;
     public Collider[] autoAimCols;
@@ -45,6 +47,7 @@ public class pickableRobotDel : MonoBehaviour, IThrowable
         rb = GetComponent<Rigidbody>();
         arrowObj = GameObject.Find(arrowOName);
         damOnCol = GetComponent<damageOnCollision>();
+        arrowObj.SetActive(false);
     }
     public IEnumerator cantThrow(float dur)
     {
@@ -67,12 +70,13 @@ public class pickableRobotDel : MonoBehaviour, IThrowable
     }
     public void startSpin() 
     {
+        arrowObj.SetActive(true);
         anim.SetBool(spinBool, true);
         isSpinning = true;
     }
     public void stopSpin()
     {
-       
+        arrowObj.SetActive(false);
         isSpinning = false;
         anim.SetBool(spinBool, false);
         
@@ -160,5 +164,9 @@ public class pickableRobotDel : MonoBehaviour, IThrowable
         arrowFrwrd = uter.transform.position - new Vector3(transform.position.x, uter.transform.position.y, transform.position.z);
         arrowObj.transform.forward = arrowFrwrd;
     }
-
+    public void onColAfterThrown() 
+    {
+        Instantiate(expl,transform.position, Quaternion.identity);
+        Destroy(gameObject);
+    }
 }
