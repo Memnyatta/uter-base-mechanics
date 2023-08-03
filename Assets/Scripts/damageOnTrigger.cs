@@ -1,15 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Events;
 public class damageOnTrigger : MonoBehaviour
 {
-    public delegate void collideAct(GameObject t);
-    public static event collideAct onCol;
-
-    public float damage;
+    
+    [SerializeField] public UnityEvent onColEvent;
     public List<string> tags;
     public bool delOnDam;
+    public float damage;
     public float destImmuneTime;
     [Header("Для просмотра")]
     public bool canBeDest;
@@ -25,7 +24,7 @@ public class damageOnTrigger : MonoBehaviour
     }
     public virtual void collide(Collider other) 
     {
-        if (onCol != null) {onCol(gameObject);}
+        onColEvent.Invoke();
         if (delOnDam) { Destroy(gameObject); }
     }
     public virtual void damaging(GameObject obj) 
@@ -35,6 +34,7 @@ public class damageOnTrigger : MonoBehaviour
        // Debug.Log("Damage trigger: " + gameObject.name + " damaged " + obj.name);
         if (curDam == null) return;
         curDam.dealDamage(damage, gameObject);
+        
     }
     public IEnumerator destImmune()
     {
@@ -43,14 +43,18 @@ public class damageOnTrigger : MonoBehaviour
         yield return null;
     }
 
-
- private void OnTriggerStay(Collider other)
+    public virtual void onTriggerS(Collider other) 
     {
         bool can = canBeDest && other.gameObject != gameObject && tags.Contains(other.gameObject.tag);
         if (can)
         {
+
             damaging(other.gameObject);
-            collide(other);     
-        }  
+            collide(other);
+        }
+    }
+ private void OnTriggerStay(Collider other)
+    {
+        onTriggerS(other);
     }
 }

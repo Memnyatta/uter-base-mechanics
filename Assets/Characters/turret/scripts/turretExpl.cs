@@ -1,19 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class turretExpl : MonoBehaviour
 {
     public GameObject explPart;
     private void OnEnable()
     {
-        damageOnTrigger.onCol += spawnPart; 
+        
        
     }
 
     private void OnDisable()
     {
-        damageOnTrigger.onCol -= spawnPart;
+        
         
     }
     // Start is called before the first frame update

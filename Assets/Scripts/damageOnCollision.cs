@@ -7,7 +7,7 @@ public class damageOnCollision : damageOnTrigger
 {
     
     [Header("-damageOnCollision-")]
-    public UnityEvent onColEvent;
+    
     public float bounceForce;
     public Rigidbody rb;
     void Awake()

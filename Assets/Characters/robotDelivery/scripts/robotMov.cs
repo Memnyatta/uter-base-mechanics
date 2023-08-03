@@ -9,6 +9,8 @@ using UnityEngine.AI;
  */
 public class robotMov : MonoBehaviour
 {
+    public float damImpact;
+    public List<string> damTags;
     public string uterName;
     public string explAnimTrigger;
     public Vector3 corpseOffset;
@@ -58,6 +60,17 @@ public class robotMov : MonoBehaviour
     {
         navAgent.SetDestination(v);
     }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (damTags.Contains(other.gameObject.tag))
+    //    {
+    //        IDamageable dam = other.gameObject.GetComponent<IDamageable>();
+    //        if (dam != null) 
+    //        {
+    //            dam.dealDamage(damImpact, gameObject);
+    //        }
+    //    }
+    //}
     // Update is called once per frame
     void FixedUpdate()
     {
