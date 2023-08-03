@@ -17,9 +17,11 @@ public class tempDamageOnTrigger : damageOnTrigger
 
     public override void collide(Collider other)
     {
+        usesBeforeStop--;
         onColEvent.Invoke();
         if (delOnDam) { Destroy(gameObject); }
-        if (usesBeforeStop <= 0) { Destroy(this); }
+        if (usesBeforeStop <= 0) { Destroy(this); } 
+
     }
     private void OnTriggerStay(Collider other)
     {

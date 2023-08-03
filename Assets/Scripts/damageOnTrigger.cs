@@ -31,7 +31,7 @@ public class damageOnTrigger : MonoBehaviour
     {
         curDam = null;
         curDam = obj.GetComponent<IDamageable>();
-       // Debug.Log("Damage trigger: " + gameObject.name + " damaged " + obj.name);
+        Debug.Log("Damage trigger: " + gameObject.name + " damaged " + obj.name);
         if (curDam == null) return;
         curDam.dealDamage(damage, gameObject);
         
