@@ -9,6 +9,7 @@ public class uterDamageOnJump : damageOnTrigger
     GameObject uter;
     public ThirdPersonController tpContr;
     [Header("Для просмотра")]
+    public bool can;
     public float minYVel;
     public float jumpHeight;
     // Start is called before the first frame update
@@ -31,7 +32,7 @@ public class uterDamageOnJump : damageOnTrigger
     }
     private void OnTriggerStay(Collider other)
     {
-        bool can = canBeDest && other.gameObject != gameObject && !hasDamaged && tags.Contains(other.gameObject.tag) && !tpContr.isGrounded && tpContr.velocity.y < minYVel;
+        can = canBeDest && other.gameObject != gameObject && !hasDamaged && tags.Contains(other.gameObject.tag) && !tpContr.isGrounded && tpContr.velocity.y < minYVel;
         if (can)
         {
                 damaging(other.gameObject);
