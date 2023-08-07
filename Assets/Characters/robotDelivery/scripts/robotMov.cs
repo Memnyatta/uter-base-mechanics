@@ -69,13 +69,13 @@ public class robotMov : MonoBehaviour
     //        }
     //    }
     //}
-    // Update is called once per frame
-    private void OnDestroy()
+    public void spawnCorpse() 
     {
         Rigidbody rb = Instantiate(corpse, transform.position + corpseOffset, Quaternion.identity).GetComponent<Rigidbody>();
         Vector3 randDir = new Vector3(Random.Range(minCorpseLaunch.x, maxCorpseLaunch.x), Random.Range(minCorpseLaunch.y, maxCorpseLaunch.y), Random.Range(minCorpseLaunch.z, maxCorpseLaunch.z));
         rb.AddForce(randDir * corpseLaunchForce);
     }
+
     void FixedUpdate()
     {
         if (Vector3.Distance(transform.position, endPoint) < minDist || Vector3.Distance(transform.position, uter.transform.position) < minDist) 
