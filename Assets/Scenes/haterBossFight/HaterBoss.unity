@@ -12034,9 +12034,9 @@ MonoBehaviour:
   minCorpseLaunch: {x: -2, y: 2, z: -2}
   maxCorpseLaunch: {x: 2, y: 4, z: 2}
   corpseLaunchForce: 22
-  speed: 0.2
+  speed: 1
   pastUterMod: 5
-  minDist: -1
+  minDist: 0.2
   expl: {fileID: 5262413090924210576, guid: e8de58e03567a1648a39fcbd20342f76, type: 3}
   corpse: {fileID: 3522247850740619545, guid: 46309c579cbf26845a2f7bc06e69f612, type: 3}
   endPoint: {x: 0, y: 0, z: 0}
@@ -13150,9 +13150,9 @@ MonoBehaviour:
   onDeathEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5239281103968794906}
-        m_TargetAssemblyTypeName: robotMov, Assembly-CSharp
-        m_MethodName: endedWay
+      - m_Target: {fileID: 5786210948913390459}
+        m_TargetAssemblyTypeName: enemyHealth, Assembly-CSharp
+        m_MethodName: dest
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

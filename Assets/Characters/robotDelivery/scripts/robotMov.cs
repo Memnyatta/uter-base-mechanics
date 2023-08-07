@@ -46,15 +46,13 @@ public class robotMov : MonoBehaviour
     {
         anim.SetTrigger(explAnimTrigger);
         navAgent.enabled = false;
+        explosion();
     }
     public void explosion() 
     {
         Instantiate(expl, transform.position, Quaternion.identity);
         Destroy(gameObject);
 
-        Rigidbody rb = Instantiate(corpse, transform.position + corpseOffset, Quaternion.identity).GetComponent<Rigidbody>();
-        Vector3 randDir = new Vector3(Random.Range(minCorpseLaunch.x, maxCorpseLaunch.x), Random.Range(minCorpseLaunch.y, maxCorpseLaunch.y), Random.Range(minCorpseLaunch.z, maxCorpseLaunch.z));
-        rb.AddForce(randDir * corpseLaunchForce);
     }
     public virtual void setDest(Vector3 v) 
     {
@@ -72,6 +70,12 @@ public class robotMov : MonoBehaviour
     //    }
     //}
     // Update is called once per frame
+    private void OnDestroy()
+    {
+        Rigidbody rb = Instantiate(corpse, transform.position + corpseOffset, Quaternion.identity).GetComponent<Rigidbody>();
+        Vector3 randDir = new Vector3(Random.Range(minCorpseLaunch.x, maxCorpseLaunch.x), Random.Range(minCorpseLaunch.y, maxCorpseLaunch.y), Random.Range(minCorpseLaunch.z, maxCorpseLaunch.z));
+        rb.AddForce(randDir * corpseLaunchForce);
+    }
     void FixedUpdate()
     {
         if (Vector3.Distance(transform.position, endPoint) < minDist || Vector3.Distance(transform.position, uter.transform.position) < minDist) 

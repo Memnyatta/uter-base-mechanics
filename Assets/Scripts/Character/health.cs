@@ -54,12 +54,18 @@ public class health : MonoBehaviour, IDamageable
         
        // StartCoroutine(makeInvincible(10));
     }
-
-    // Update is called once per frame
-    void FixedUpdate()
+    public virtual void onUpdate() 
     {
         pubcurHealth = curHealth;
         pubisInvincible = isInvincible;
-        //Debug.Log("fixedUpdate");
+        if (curHealth <= 0)
+        {
+            death();
+        }
+    }
+    // Update is called once per frame
+    void Update()
+    {
+        onUpdate();
     }
 }

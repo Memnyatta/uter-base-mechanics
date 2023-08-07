@@ -13,4 +13,8 @@ public class enemyHealth : health
     {
         Destroy(gameObject);
     }
+    private void Update()
+    {
+        onUpdate();
+    }
 }
