@@ -46,7 +46,7 @@ public class robotMov : MonoBehaviour
     {
         anim.SetTrigger(explAnimTrigger);
         navAgent.enabled = false;
-        explosion();
+        
     }
     public void explosion() 
     {
